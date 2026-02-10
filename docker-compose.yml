@@ -1,0 +1,53 @@
+version: '3.8'
+
+services:
+  # --- BACKEND ---
+  server:
+    build: ./server
+    ports:
+      - "3000:3000"
+    environment:
+      - POSTGRES_CONNECTION=postgres://user:password@db:5432/chat
+      - UPLOAD_URL=http://localhost:3000/uploads
+      - REDIS_HOST=redis
+    depends_on:
+      - db
+      - redis
+    volumes:
+      - ./server:/app
+      - /app/node_modules
+      - ./server/uploads:/app/uploads
+
+  # --- DATABASE ---
+  db:
+    image: postgres:15-alpine
+    restart: always
+    environment:
+      POSTGRES_USER: user
+      POSTGRES_PASSWORD: password
+      POSTGRES_DB: chat
+    volumes:
+      - db_data:/var/lib/postgresql/data
+    ports:
+      - "5432:5432"
+
+  # --- REDIS ---
+  redis:
+    image: redis:alpine
+    restart: always
+
+  # --- FRONTEND (NEW) ---
+  client:
+    build: ./client
+    ports:
+      - "5173:5173"
+    volumes:
+      - ./client:/app         # Syncs your code edits instantly
+      - /app/node_modules     # Prevents conflicts with local node_modules
+    environment:
+      - VITE_API_URL=http://localhost:3000
+    depends_on:
+      - server
+
+volumes:
+  db_data:
