@@ -1,0 +1,86 @@
+/* --- GLOBAL RESET --- */
+:root {
+  font-family: 'Segoe UI', 'Roboto', 'Helvetica', 'Arial', sans-serif;
+  line-height: 1.5;
+  font-weight: 400;
+  color-scheme: dark;
+}
+
+html, body {
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  height: 100%;
+  overflow: hidden; /* Prevent full page scroll */
+  background-color: #36393f;
+}
+
+#root {
+  width: 100%;
+  height: 100%;
+}
+
+/* --- DISCORD STYLE SCROLLBARS --- */
+/* Width */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+  background-color: #2f3136; 
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+  background-color: #2e3338;
+  border-radius: 4px;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background-color: #202225;
+  border-radius: 4px;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  background-color: #18191c;
+}
+
+/* --- MOBILE RESPONSIVE ANIMATIONS --- */
+
+/* The dark background overlay when menu is open */
+.mobile-sidebar-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 999;
+  display: flex;
+  background: rgba(0, 0, 0, 0.7); /* Dark dim */
+  backdrop-filter: blur(2px);     /* Blur effect behind menu */
+  animation: fadeIn 0.2s ease-out;
+}
+
+/* The container holding the Server Rail & Sidebar */
+.sidebar-container {
+  display: flex;
+  height: 100%;
+  box-shadow: 10px 0 30px rgba(0,0,0,0.5); /* Shadow on the right */
+  animation: slideIn 0.25s cubic-bezier(0.16, 1, 0.3, 1); /* Apple-like smooth slide */
+}
+
+/* --- KEYFRAMES --- */
+@keyframes slideIn {
+  from { transform: translateX(-100%); opacity: 0; }
+  to { transform: translateX(0); opacity: 1; }
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+/* --- UTILITIES --- */
+button:active {
+  transform: translateY(1px); /* Click press effect */
+}
